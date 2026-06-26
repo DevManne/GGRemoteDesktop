@@ -75,6 +75,5 @@ Xcode resolves the `stasel/WebRTC` and local `SharedKit` packages automatically.
 - [x] **Phase 3** – iOS client: WebRTC receiver/renderer, touch→input mapping, QR scanner.
 - [x] **Phase 4** – Pairing & discovery: QR exchange, Bonjour, reconnect, Keychain, workspace.
 
-## License
 
-MIT (see project owner).
+

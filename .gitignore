@@ -1,0 +1,27 @@
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
+*.moved-aside
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# WebRTC binary (added during setup, not vendored)
+WebRTC.xcframework/
+*.xcframework.zip
+
+# macOS
+.DS_Store
+
+# Secrets / signing
+*.p12
+*.mobileprovision
+secrets.xcconfig

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Client app Info.plist. Usage-description strings appear in the iOS permission prompts.
+  Camera is needed to scan the pairing QR; Local Network + Bonjour for discovery.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>RemoteMac</string>
+  <key>CFBundleIdentifier</key>
+  <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <key>MinimumOSVersion</key>
+  <string>17.0</string>
+  <key>UILaunchScreen</key>
+  <dict/>
+  <key>NSCameraUsageDescription</key>
+  <string>RemoteMac uses the camera to scan the pairing code shown on your Mac.</string>
+  <key>NSLocalNetworkUsageDescription</key>
+  <string>RemoteMac discovers your Mac on the local network.</string>
+  <key>NSBonjourServices</key>
+  <array>
+    <string>_remotemac._tcp</string>
+  </array>
+  <key>UISupportedInterfaceOrientations~ipad</key>
+  <array>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+    <string>UIInterfaceOrientationPortrait</string>
+  </array>
+</dict>
+</plist>

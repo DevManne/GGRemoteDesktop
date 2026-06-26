@@ -1,0 +1,39 @@
+# CI for the RemoteMac monorepo.
+#
+# Only the SharedKit Swift package is built/tested here: the two app targets require
+# the closed-source WebRTC binary, code signing and (for the host) a Mac with screen
+# access, none of which are available on shared CI runners. SharedKit holds the
+# platform-independent logic (models, crypto, auth, discovery, reconnect) and has the
+# unit tests, so it is the meaningful thing to verify automatically.
+#
+# Runners: these jobs need macOS with the Swift toolchain (Xcode). Tag your runner
+# accordingly, or adjust `tags:` below to match your runner configuration. GitLab SaaS
+# macOS runners use the `saas-macos-*` images; self-managed runners use custom tags.
+
+stages:
+  - test
+
+default:
+  # Adjust to match an available macOS/Swift runner in your project.
+  tags:
+    - saas-macos-medium-m1
+  image: macos-15-xcode-16
+
+workflow:
+  rules:
+    # Run for merge requests and for pipelines on the default branch; avoid duplicate
+    # branch pipelines when an MR is open.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+sharedkit:build-test:
+  stage: test
+  script:
+    - swift --version
+    - cd SharedKit
+    - swift build
+    - swift test --enable-code-coverage
+  cache:
+    key: "sharedkit-spm-$CI_COMMIT_REF_SLUG"
+    paths:
+      - SharedKit/.build/

@@ -1,0 +1,65 @@
+# XcodeGen specification. Run `xcodegen generate` to produce RemoteMac.xcodeproj, then
+# open it in Xcode. This keeps the Xcode project reproducible and reviewable in version
+# control instead of committing the .pbxproj by hand.
+#
+# Prerequisite: `brew install xcodegen`. See docs/SETUP.md for the WebRTC package.
+name: RemoteMac
+options:
+  bundleIdPrefix: com.example.remotemac
+  deploymentTarget:
+    macOS: "14.0"
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+configs:
+  Debug: debug
+  Release: release
+
+packages:
+  WebRTC:
+    url: https://github.com/stasel/WebRTC.git
+    majorVersion: 120.0.0
+  SharedKit:
+    path: SharedKit
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: ${DEVELOPMENT_TEAM}
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.9"
+
+targets:
+  RemoteMacHost:
+    type: application
+    platform: macOS
+    sources:
+      - path: macOS/RemoteMacHost
+        excludes:
+          - "README.md"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.remotemac.host
+        INFOPLIST_FILE: macOS/RemoteMacHost/Support/Info.plist
+        CODE_SIGN_ENTITLEMENTS: macOS/RemoteMacHost/Support/RemoteMacHost.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+    dependencies:
+      - package: WebRTC
+      - package: SharedKit
+        product: SharedKit
+
+  RemoteMacClient:
+    type: application
+    platform: iOS
+    sources:
+      - path: iOS/RemoteMacClient
+        excludes:
+          - "README.md"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.remotemac.client
+        INFOPLIST_FILE: iOS/RemoteMacClient/Support/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - package: WebRTC
+      - package: SharedKit
+        product: SharedKit

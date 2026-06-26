@@ -1,0 +1,4 @@
+// Shared signing configuration referenced by project.yml via ${DEVELOPMENT_TEAM}.
+// Export the variable before generating: `export DEVELOPMENT_TEAM=XXXXXXXXXX`.
+// Do not commit real team IDs; keep them in the git-ignored secrets.xcconfig.
+DEVELOPMENT_TEAM = $(inherited)
